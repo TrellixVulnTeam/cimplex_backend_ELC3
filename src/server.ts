@@ -5,6 +5,7 @@ import { TodoInstance } from "./model";
 import TodoValidator from './validator/index'
 import Middleware from './middleware/index'
 import AddSellController from './controller/index'
+import UserController from './controller/user'
 
 db.sync().then(() => {
 	console.log("connect to db");
@@ -20,6 +21,11 @@ app.get('/read', AddSellController.read)
 app.get('/read/:id',TodoValidator.checkIdParam(),Middleware.handleValidationError,AddSellController.readByID)
 app.put('/update/:id',TodoValidator.checkIdParam(),Middleware.handleValidationError,AddSellController.update)
 app.delete('/delete/:id',AddSellController.deleteById)
+
+//Authentication
+
+app.post('/register',UserController.userRegister)
+// app.post('/login',UserController.userLogin)
 
 app.listen(3000,()=>{
     console.log('server is running')
